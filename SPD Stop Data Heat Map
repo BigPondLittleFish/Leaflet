@@ -3,24 +3,27 @@ library(leaflet)
 library(leaflet.extras)
 library(RColorBrewer)
 library(openxlsx)
+library(maptools)
 
 ###########################################
 #####################################################################################
-library(maptools)
-#Extracting Coordinates and ID from KML  
+#Extracting Coordinates from KML file
+
 kml.text <- readLines("Police_Beats.kml")  
 kmltext <- getKMLcoordinates("Police_Beats.kml", ignoreAltitude = TRUE)
 as.data.table(kml.text) 
 getKMLcoordinates(system.file("Police_Beats.kml", package="maptools"))
 write.xlsx(kmltext,"KML_coordinates.xlsx")
-# Import with all sheets (21)
+
+# Import with all 21 sheets available
+
 tab_names <- excel_sheets(path = "KML_coordinates.xlsx")
 kml <- lapply(tab_names, function(x) read_excel(path = "KML_coordinates.xlsx", sheet = x))
 str(kml)
 
 #####################################################################################
 
-leaf <- read.csv("LeafTry.csv")
+leaf <- read.csv("CRIME DATA GOES HERE")
 
 mypallete <- colors()[c(128,129,130,131,132,133,137,136,135,134)]
 
@@ -28,8 +31,8 @@ Leaf1 <- leaflet(leaf) %>% addTiles() %>% addHeatmap(leaf,lat = ~Latitude, lng =
             layerId = NULL, group = NULL, minOpacity = 0.4, max = .4,
             radius = 5, blur =5, gradient = mypallete, cellSize = NULL) %>%
             addProviderTiles(providers$CartoDB.DarkMatter) %>% 
-            setView(lat = 38.5650, lng = -121.4850, zoom = 12) %>% addTiles() %>%
-  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+            setView(lat = 38.5650, lng = -121.4850, zoom = 12) %>% addTiles() %>%       # Need to find a way to not have to lay
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,                                     # each poly individually! Lots of code!
             group = NULL, stroke = TRUE, color = "#03F", weight = 3,
             opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
             dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
