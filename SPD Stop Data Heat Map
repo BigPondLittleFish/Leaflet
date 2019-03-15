@@ -1,0 +1,212 @@
+library(readxl)
+library(leaflet)
+library(leaflet.extras)
+library(RColorBrewer)
+library(openxlsx)
+
+###########################################
+#####################################################################################
+library(maptools)
+#Extracting Coordinates and ID from KML  
+kml.text <- readLines("Police_Beats.kml")  
+kmltext <- getKMLcoordinates("Police_Beats.kml", ignoreAltitude = TRUE)
+as.data.table(kml.text) 
+getKMLcoordinates(system.file("Police_Beats.kml", package="maptools"))
+write.xlsx(kmltext,"KML_coordinates.xlsx")
+# Import with all sheets (21)
+tab_names <- excel_sheets(path = "KML_coordinates.xlsx")
+kml <- lapply(tab_names, function(x) read_excel(path = "KML_coordinates.xlsx", sheet = x))
+str(kml)
+
+#####################################################################################
+
+leaf <- read.csv("LeafTry.csv")
+
+mypallete <- colors()[c(128,129,130,131,132,133,137,136,135,134)]
+
+Leaf1 <- leaflet(leaf) %>% addTiles() %>% addHeatmap(leaf,lat = ~Latitude, lng = ~Longitude, intensity = (.2),
+            layerId = NULL, group = NULL, minOpacity = 0.4, max = .4,
+            radius = 5, blur =5, gradient = mypallete, cellSize = NULL) %>%
+            addProviderTiles(providers$CartoDB.DarkMatter) %>% 
+            setView(lat = 38.5650, lng = -121.4850, zoom = 12) %>% addTiles() %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+            group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+            opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+            dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+            popupOptions = NULL, label = NULL, labelOptions = NULL,
+            options = pathOptions(), highlightOptions = NULL,
+            data = kml[[1]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[2]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[3]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[1]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[4]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[5]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[6]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[1]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[7]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[8]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[9]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[10]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[11]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[12]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[13]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[10]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[14]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[15]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[16]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[10]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[17]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[18]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[19]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[20]]) %>%
+  addPolygons(lng = ~V1, lat = ~V2, layerId = NULL,
+              group = NULL, stroke = TRUE, color = "#03F", weight = 3,
+              opacity = 0.5, fill = TRUE, fillColor = "#03F", fillOpacity = 0.05,
+              dashArray = NULL, smoothFactor = 1, noClip = FALSE, popup = NULL,
+              popupOptions = NULL, label = NULL, labelOptions = NULL,
+              options = pathOptions(), highlightOptions = NULL,
+              data = kml[[21]])
+  
+  
+Leaf1
+
+
+
